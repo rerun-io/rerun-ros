@@ -105,7 +105,7 @@ def init(languages: set[str], dry_run: bool) -> None:
     delete_files_and_folder(files_to_delete, dry_run)
 
 
-def remove_file(filepath: str):
+def remove_file(filepath: str) -> None:
     try:
         os.remove(filepath)
     except FileNotFoundError:
