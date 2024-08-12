@@ -315,12 +315,12 @@ dependencies = [
 [[package]]
 name = "rclrs"
 version = "0.4.1"
-source = "git+https://github.com/esteve/ros2_rust.git?rev=80fb757cf13e3c0f6858cabfc4abb35f88146fc0#80fb757cf13e3c0f6858cabfc4abb35f88146fc0"
+source = "git+https://github.com/esteve/ros2_rust.git?branch=generic-subscriptions#e616920cbcbdfc95b3f866f92558f59ab55c9280"
 dependencies = [
  "bindgen",
  "cfg-if",
  "futures",
- "rosidl_runtime_rs 0.4.1 (git+https://github.com/esteve/ros2_rust.git?branch=generic-subscriptions)",
+ "rosidl_runtime_rs",
 ]
 
 [[package]]
@@ -358,21 +358,13 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "rclrs",
- "rosidl_runtime_rs 0.4.1 (git+https://github.com/esteve/ros2_rust.git?rev=80fb757cf13e3c0f6858cabfc4abb35f88146fc0)",
+ "rosidl_runtime_rs",
 ]
 
 [[package]]
 name = "rosidl_runtime_rs"
 version = "0.4.1"
 source = "git+https://github.com/esteve/ros2_rust.git?branch=generic-subscriptions#7df9b06685b141359305ffd4349410913bc57a00"
-dependencies = [
- "cfg-if",
-]
-
-[[package]]
-name = "rosidl_runtime_rs"
-version = "0.4.1"
-source = "git+https://github.com/esteve/ros2_rust.git?rev=80fb757cf13e3c0f6858cabfc4abb35f88146fc0#80fb757cf13e3c0f6858cabfc4abb35f88146fc0"
 dependencies = [
  "cfg-if",
 ]
