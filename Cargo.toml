@@ -23,9 +23,6 @@ targets = ["x86_64-unknown-linux-gnu", "wasm32-unknown-unknown"]
 default = []
 
 
-[dependencies]
-
-
 [dev-dependencies]
 
 
@@ -196,3 +193,6 @@ zero_sized_map_values = "warn"
 
 manual_range_contains = "allow" # this one is just worse imho
 ref_patterns = "allow"          # It's nice to avoid ref pattern, but there are some situations that are hard (impossible?) to express without.
+
+[dependencies]
+rclrs = { git = "https://github.com/esteve/ros2_rust.git", version = "0.4.1" }
