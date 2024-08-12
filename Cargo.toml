@@ -11,7 +11,7 @@ name = "rerun-ros"
 publish = false                                                      # TODO: set to `true` if you plan on publishing the crate
 readme = "README.md"
 repository = "https://github.com/rerun-io/rerun-ros"
-rust-version = "1.76"
+rust-version = "1.74"
 version = "0.1.0"
 
 [package.metadata.docs.rs]
@@ -195,4 +195,6 @@ manual_range_contains = "allow" # this one is just worse imho
 ref_patterns = "allow"          # It's nice to avoid ref pattern, but there are some situations that are hard (impossible?) to express without.
 
 [dependencies]
-rclrs = { git = "https://github.com/esteve/ros2_rust.git", version = "0.4.1" }
+anyhow = "1.0.86"
+rclrs = { git = "https://github.com/esteve/ros2_rust.git", rev = "80fb757cf13e3c0f6858cabfc4abb35f88146fc0" }
+rosidl_runtime_rs = { git = "https://github.com/esteve/ros2_rust.git", rev = "80fb757cf13e3c0f6858cabfc4abb35f88146fc0" }

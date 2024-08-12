@@ -12,6 +12,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "anyhow"
+version = "1.0.86"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b3d1d046238990b9cf5bcde22a3fb3584ee5cf65fb2765f454ed428c7a0063da"
+
+[[package]]
 name = "autocfg"
 version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -309,12 +315,12 @@ dependencies = [
 [[package]]
 name = "rclrs"
 version = "0.4.1"
-source = "git+https://github.com/esteve/ros2_rust.git#e485b1c90893bedab32ee9e54ff5e47c4f6bd004"
+source = "git+https://github.com/esteve/ros2_rust.git?rev=80fb757cf13e3c0f6858cabfc4abb35f88146fc0#80fb757cf13e3c0f6858cabfc4abb35f88146fc0"
 dependencies = [
  "bindgen",
  "cfg-if",
  "futures",
- "rosidl_runtime_rs",
+ "rosidl_runtime_rs 0.4.1 (git+https://github.com/esteve/ros2_rust.git?branch=generic-subscriptions)",
 ]
 
 [[package]]
@@ -350,14 +356,23 @@ checksum = "7a66a03ae7c801facd77a29370b4faec201768915ac14a721ba36f20bc9c209b"
 name = "rerun-ros"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
  "rclrs",
+ "rosidl_runtime_rs 0.4.1 (git+https://github.com/esteve/ros2_rust.git?rev=80fb757cf13e3c0f6858cabfc4abb35f88146fc0)",
 ]
 
 [[package]]
 name = "rosidl_runtime_rs"
 version = "0.4.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ab7a28fb13ba53b35aea2a403a1da49baa03a901c8befe1cea5f42dbc66857db"
+source = "git+https://github.com/esteve/ros2_rust.git?branch=generic-subscriptions#7df9b06685b141359305ffd4349410913bc57a00"
+dependencies = [
+ "cfg-if",
+]
+
+[[package]]
+name = "rosidl_runtime_rs"
+version = "0.4.1"
+source = "git+https://github.com/esteve/ros2_rust.git?rev=80fb757cf13e3c0f6858cabfc4abb35f88146fc0#80fb757cf13e3c0f6858cabfc4abb35f88146fc0"
 dependencies = [
  "cfg-if",
 ]
@@ -497,3 +512,7 @@ name = "windows_x86_64_msvc"
 version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec"
+
+[[patch.unused]]
+name = "rerun-ros"
+version = "0.1.0"

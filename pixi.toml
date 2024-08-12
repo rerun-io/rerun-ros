@@ -25,7 +25,7 @@ ros-humble-builtin-interfaces = ">=1.2.1,<2"
 ros-humble-rcl-interfaces = ">=1.2.1,<2"
 ros-humble-rosgraph-msgs = ">=1.2.1,<2"
 clangdev = ">=18.1.8,<19"
-rust = ">=1.80.0,<2"
+rust = "1.74.0.*"
 ros-humble-rosidl-default-generators = ">=1.2.0,<2"
 
 [build-dependencies]
