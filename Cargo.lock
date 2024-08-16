@@ -12,6 +12,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "ament_rs"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b901da946b7b1620d44563e10c7634681af855a7f5fb59bd09b6eb801dcf6e49"
+dependencies = [
+ "itertools",
+ "walkdir",
+]
+
+[[package]]
 name = "anyhow"
 version = "1.0.86"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -199,6 +209,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "itertools"
+version = "0.8.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f56a2d0bc861f9165be4eb3442afd3c236d8a98afd426f65d92324ae1091a484"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "lazy_static"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -315,12 +334,13 @@ dependencies = [
 [[package]]
 name = "rclrs"
 version = "0.4.1"
-source = "git+https://github.com/esteve/ros2_rust.git?branch=generic-subscriptions#e616920cbcbdfc95b3f866f92558f59ab55c9280"
 dependencies = [
+ "ament_rs",
  "bindgen",
  "cfg-if",
  "futures",
- "rosidl_runtime_rs",
+ "libloading",
+ "rosidl_runtime_rs 0.4.1 (git+https://github.com/esteve/ros2_rust.git?branch=generic-subscriptions)",
 ]
 
 [[package]]
@@ -358,7 +378,14 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "rclrs",
- "rosidl_runtime_rs",
+ "rosidl_runtime_rs 0.4.1",
+]
+
+[[package]]
+name = "rosidl_runtime_rs"
+version = "0.4.1"
+dependencies = [
+ "cfg-if",
 ]
 
 [[package]]
@@ -386,6 +413,15 @@ dependencies = [
  "libc",
  "linux-raw-sys",
  "windows-sys",
+]
+
+[[package]]
+name = "same-file"
+version = "1.0.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "93fc1dc3aaa9bfed95e02e6eadabb4baf7e3078b0bd1b4d7b6b0b68378900502"
+dependencies = [
+ "winapi-util",
 ]
 
 [[package]]
@@ -421,6 +457,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3354b9ac3fae1ff6755cb6db53683adb661634f67557942dea4facebec0fee4b"
 
 [[package]]
+name = "walkdir"
+version = "2.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "29790946404f91d9c5d06f9874efddea1dc06c5efe94541a7d6863108e3a5e4b"
+dependencies = [
+ "same-file",
+ "winapi-util",
+]
+
+[[package]]
 name = "which"
 version = "4.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -430,6 +476,15 @@ dependencies = [
  "home",
  "once_cell",
  "rustix",
+]
+
+[[package]]
+name = "winapi-util"
+version = "0.1.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cf221c93e13a30d793f7645a0e7762c55d169dbb0a49671918a2319d289b10bb"
+dependencies = [
+ "windows-sys",
 ]
 
 [[package]]
