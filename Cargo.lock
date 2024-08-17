@@ -373,7 +373,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7a66a03ae7c801facd77a29370b4faec201768915ac14a721ba36f20bc9c209b"
 
 [[package]]
-name = "rerun-ros"
+name = "rerun_ros"
 version = "0.1.0"
 dependencies = [
  "anyhow",
@@ -562,4 +562,8 @@ checksum = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec"
 
 [[patch.unused]]
 name = "rerun-ros"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "rerun_ros"
 version = "0.1.0"

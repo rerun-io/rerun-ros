@@ -9,10 +9,11 @@ fn main() -> Result<(), Error> {
 
     let generic_subscription = node.create_generic_subscription(
         "topic",
-        "std_msgs/msg/String");
+        "std_msgs/msg/String",
         rclrs::QOS_PROFILE_DEFAULT,
         move |msg: rclrs::SerializedMessage| {
             // Process message and pass it to rerun
+            println!("Serialized message: {:?}", msg);
         },
     )?;
 

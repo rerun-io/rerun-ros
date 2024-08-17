@@ -27,6 +27,10 @@ ros-humble-rosgraph-msgs = ">=1.2.1,<2"
 clangdev = ">=18.1.8,<19"
 rust = "1.74.0.*"
 ros-humble-rosidl-default-generators = ">=1.2.0,<2"
+ros-humble-ros2cli = ">=0.18.8,<0.19"
+ros-humble-ros2run = ">=0.18.8,<0.19"
+ros-humble-ros2cli-common-extensions = ">=0.1.1,<0.2"
+ros-humble-ros-core = ">=0.10.0,<0.11"
 
 [build-dependencies]
 colcon-common-extensions = ">=0.3.0,<0.4"
