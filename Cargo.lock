@@ -391,7 +391,7 @@ dependencies = [
 [[package]]
 name = "rosidl_runtime_rs"
 version = "0.4.1"
-source = "git+https://github.com/esteve/ros2_rust.git?branch=generic-subscriptions#7df9b06685b141359305ffd4349410913bc57a00"
+source = "git+https://github.com/esteve/ros2_rust.git?branch=generic-subscriptions#1a51d39ac1f41801f1e1017aed9332f1e6560382"
 dependencies = [
  "cfg-if",
 ]
@@ -559,10 +559,6 @@ name = "windows_x86_64_msvc"
 version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec"
-
-[[patch.unused]]
-name = "rerun-ros"
-version = "0.1.0"
 
 [[patch.unused]]
 name = "rerun_ros"
