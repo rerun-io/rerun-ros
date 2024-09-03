@@ -258,10 +258,18 @@ impl ROSMessage {
         let mut msg_type = ROSType::new("");
         let mut fields = Vec::new();
 
+        let re = Regex::new(r"(^\s*$|^\s*#)").unwrap();
+
         let lines: Vec<&str> = def.lines().collect();
         for line in lines {
+            if re.is_match(&line) {
+                continue;
+            }
+
+            let line = line.trim();
+
             if line.starts_with("MSG:") {
-                let line = &line[6..];
+                let line = &line[5..];
                 msg_type = ROSType::new(line);
             } else {
                 let new_field = ROSField::new_with_definition(line);

@@ -55,11 +55,11 @@ fn main() -> Result<(), Error> {
     );
 
     for msg in msg_parsed {
-        println!("Message: {:?}", msg.type_().pkg_name());
-        println!("Message: {:?}", msg.type_().msg_name());
+        println!("Message package name: {:?}", msg.type_().pkg_name());
+        println!("Message name: {:?}", msg.type_().msg_name());
         for field in msg.fields() {
-            println!("Field: {:?}", field.type_().pkg_name());
-            println!("Field: {:?}", field.type_().msg_name());
+            println!("Field package name: {:?}", field.type_().pkg_name());
+            println!("Field message name: {:?}", field.type_().msg_name());
         }
     }
     // let context = rclrs::Context::new(env::args())?;
