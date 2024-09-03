@@ -28,7 +28,13 @@ impl ROSType {
         }
 
         let (pkg_name, msg_name) = if let Some(pos) = pos {
-            (name[..pos].to_string(), name[pos + 1..].to_string())
+            let pkg_name = name[..pos].to_string();
+            let msg_name = name[pos + 1..].to_string();
+            if msg_name.starts_with("msg/") || msg_name.starts_with("srv/") {
+                (pkg_name, msg_name[4..].to_string())
+            } else {
+                (pkg_name, msg_name)
+            }
         } else {
             (String::new(), name.to_string())
         };

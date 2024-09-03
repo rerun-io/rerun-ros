@@ -51,7 +51,7 @@ const POSE_STAMPED_DEF: &str = "# A Pose with reference coordinate frame and tim
 fn main() -> Result<(), Error> {
     let msg_parsed = rerun_ros::parse_message_definitions(
         POSE_STAMPED_DEF,
-        &rerun_ros::ROSType::new("geometry_msgs/PoseStamped"),
+        &rerun_ros::ROSType::new("geometry_msgs/msg/PoseStamped"),
     );
 
     for msg in msg_parsed {
