@@ -378,6 +378,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "rclrs",
+ "regex",
  "rosidl_runtime_rs 0.4.1",
 ]
 
