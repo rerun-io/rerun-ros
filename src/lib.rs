@@ -51,15 +51,6 @@ impl ROSType {
         }
     }
 
-    pub fn set_pkg_name(&mut self, new_pkg: &str) {
-        assert!(self.pkg_name.is_empty());
-
-        self.base_name = format!("{}/{}", new_pkg, self.base_name);
-        self.pkg_name = new_pkg.to_string();
-        self.msg_name = self.base_name[new_pkg.len() + 1..].to_string();
-        self.hash = calculate_hash(&self.base_name);
-    }
-
     pub fn pkg_name(&self) -> &str {
         &self.pkg_name
     }
@@ -250,6 +241,10 @@ impl ROSField {
 
     pub fn change_type(&mut self, new_type: ROSType) {
         self.field_type = new_type;
+    }
+
+    pub fn name(&self) -> &str {
+        &self.fieldname
     }
 }
 

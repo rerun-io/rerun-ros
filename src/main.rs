@@ -2,6 +2,8 @@ use std::env;
 
 use anyhow::{Error, Result};
 
+use std::io::Cursor;
+
 const POSE_STAMPED_DEF: &str = "# A Pose with reference coordinate frame and timestamp\n\
                                 Header header\n\
                                 Pose pose\n\
@@ -48,10 +50,17 @@ const POSE_STAMPED_DEF: &str = "# A Pose with reference coordinate frame and tim
                                 float64 z\n\
                                 float64 w\n";
 
+const STRING_DEF: &str = "# This was originally provided as an example message.
+                          # It is deprecated as of Foxy
+                          # It is recommended to create your own semantically meaningful message.
+                          # However if you would like to continue using this please use the equivalent in example_msgs.
+
+                          string data";
+
 fn main() -> Result<(), Error> {
     let msg_parsed = rerun_ros::parse_message_definitions(
-        POSE_STAMPED_DEF,
-        &rerun_ros::ROSType::new("geometry_msgs/msg/PoseStamped"),
+        STRING_DEF,
+        &rerun_ros::ROSType::new("std_msgs/msg/String"),
     );
 
     for msg in msg_parsed {
@@ -60,22 +69,39 @@ fn main() -> Result<(), Error> {
         for field in msg.fields() {
             println!("Field package name: {:?}", field.type_().pkg_name());
             println!("Field message name: {:?}", field.type_().msg_name());
+            println!("Field name: {:?}", field.name());
         }
     }
-    // let context = rclrs::Context::new(env::args())?;
+    let context = rclrs::Context::new(env::args())?;
 
-    // let node = rclrs::create_node(&context, "minimal_subscriber")?;
+    let node = rclrs::create_node(&context, "minimal_subscriber")?;
 
-    // let generic_subscription = node.create_generic_subscription(
-    //     "topic",
-    //     "std_msgs/msg/String",
-    //     rclrs::QOS_PROFILE_DEFAULT,
-    //     move |msg: rclrs::SerializedMessage| {
-    //         // Process message and pass it to rerun
-    //         println!("Serialized message: {:?}", msg);
-    //     },
-    // )?;
+    // Parse message definition for std_msgs/msg/String
+    // let msg = rerun_ros::parse_message_definitions(
+    //     STRING_DEF,
+    //     &rerun_ros::ROSType::new("std_msgs/msg/String"),
+    // )[0];
 
-    // rclrs::spin(node).map_err(|err| err.into())
-    Ok(())
+    let generic_subscription = node.create_generic_subscription(
+        "topic",
+        "std_msgs/msg/String",
+        rclrs::QOS_PROFILE_DEFAULT,
+        move |msg: rclrs::SerializedMessage| {
+            // Process message and pass it to rerun
+            println!("Serialized message: {:?}", msg);
+            // Wrap data in a CDR buffer
+            // let cdr_buffer = Cursor::new(unsafe { slice::from_raw_parts(data, length) }.to_vec());
+            // Iterate fields from the message definition and depending on type,
+            // use the appropriate CDR deserializer to read the data
+            // println!("Message package name: {:?}", msg.type_().pkg_name());
+            // println!("Message name: {:?}", msg.type_().msg_name());
+            // for field in msg.fields() {
+            //     println!("Field package name: {:?}", field.type_().pkg_name());
+            //     println!("Field message name: {:?}", field.type_().msg_name());
+            //     println!("Field name: {:?}", field.name());
+            // }
+        },
+    )?;
+
+    rclrs::spin(node).map_err(|err| err.into())
 }

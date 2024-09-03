@@ -196,6 +196,7 @@ ref_patterns = "allow"          # It's nice to avoid ref pattern, but there are 
 
 [dependencies]
 anyhow = "1.0.86"
+cdr = "0.2.4"
 rclrs = { path = "../ros2_rust/rclrs" }
 regex = "1.10.6"
 rosidl_runtime_rs = { path = "../ros2_rust/rosidl_runtime_rs" }
