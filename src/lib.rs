@@ -58,6 +58,10 @@ impl ROSType {
     pub fn msg_name(&self) -> &str {
         &self.msg_name
     }
+
+    pub fn id(&self) -> &BuiltinType {
+        &self.id
+    }
 }
 
 impl PartialEq for ROSType {

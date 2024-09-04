@@ -2,7 +2,10 @@ use std::env;
 
 use anyhow::{Error, Result};
 
+use core::slice;
+use std::ffi::CString;
 use std::io::Cursor;
+use std::sync::Arc;
 
 const POSE_STAMPED_DEF: &str = "# A Pose with reference coordinate frame and timestamp\n\
                                 Header header\n\
@@ -63,43 +66,45 @@ fn main() -> Result<(), Error> {
         &rerun_ros::ROSType::new("std_msgs/msg/String"),
     );
 
-    for msg in msg_parsed {
-        println!("Message package name: {:?}", msg.type_().pkg_name());
-        println!("Message name: {:?}", msg.type_().msg_name());
-        for field in msg.fields() {
-            println!("Field package name: {:?}", field.type_().pkg_name());
-            println!("Field message name: {:?}", field.type_().msg_name());
-            println!("Field name: {:?}", field.name());
-        }
-    }
+    let msg_def = Arc::clone(msg_parsed.get(0).unwrap());
+
     let context = rclrs::Context::new(env::args())?;
 
     let node = rclrs::create_node(&context, "minimal_subscriber")?;
-
-    // Parse message definition for std_msgs/msg/String
-    // let msg = rerun_ros::parse_message_definitions(
-    //     STRING_DEF,
-    //     &rerun_ros::ROSType::new("std_msgs/msg/String"),
-    // )[0];
 
     let generic_subscription = node.create_generic_subscription(
         "topic",
         "std_msgs/msg/String",
         rclrs::QOS_PROFILE_DEFAULT,
         move |msg: rclrs::SerializedMessage| {
+            let msg_def = Arc::clone(&msg_def);
             // Process message and pass it to rerun
-            println!("Serialized message: {:?}", msg);
+            let serialized_message = &msg.handle().get_rcl_serialized_message().lock().unwrap();
+            let buffer = serialized_message.buffer;
+            let buffer_length = serialized_message.buffer_length;
             // Wrap data in a CDR buffer
-            // let cdr_buffer = Cursor::new(unsafe { slice::from_raw_parts(data, length) }.to_vec());
-            // Iterate fields from the message definition and depending on type,
-            // use the appropriate CDR deserializer to read the data
-            // println!("Message package name: {:?}", msg.type_().pkg_name());
-            // println!("Message name: {:?}", msg.type_().msg_name());
-            // for field in msg.fields() {
-            //     println!("Field package name: {:?}", field.type_().pkg_name());
-            //     println!("Field message name: {:?}", field.type_().msg_name());
-            //     println!("Field name: {:?}", field.name());
-            // }
+            let mut cdr_buffer =
+                Cursor::new(unsafe { slice::from_raw_parts(buffer, buffer_length) }.to_vec());
+            println!("Package name: {:?}", msg_def.type_().pkg_name());
+            println!("Message name: {:?}", msg_def.type_().msg_name());
+            // Iterate over fields from the message definition and depending on type,
+            for field in msg_def.fields() {
+                // use the appropriate CDR deserializer to read the data
+                match field.type_().id() {
+                    rerun_ros::BuiltinType::String => {
+                        let cs =
+                            cdr::deserialize_from::<_, String, _>(&mut cdr_buffer, cdr::Infinite)
+                                .unwrap();
+                        println!(
+                            "Field name: {:?}, Field data: {:?} Field length: {:?}",
+                            field.name(),
+                            cs,
+                            cs.len(),
+                        );
+                    }
+                    _ => {}
+                }
+            }
         },
     )?;
 
