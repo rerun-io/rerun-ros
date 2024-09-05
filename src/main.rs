@@ -90,20 +90,24 @@ fn main() -> Result<(), Error> {
             // Iterate over fields from the message definition and depending on type,
             for field in msg_def.fields() {
                 // use the appropriate CDR deserializer to read the data
-                match field.type_().id() {
+                let (field, cs) = match field.type_().id() {
                     rerun_ros::BuiltinType::String => {
                         let cs =
                             cdr::deserialize_from::<_, String, _>(&mut cdr_buffer, cdr::Infinite)
                                 .unwrap();
-                        println!(
-                            "Field name: {:?}, Field data: {:?} Field length: {:?}",
-                            field.name(),
-                            cs,
-                            cs.len(),
-                        );
+                        (field, cs)
                     }
-                    _ => {}
-                }
+                    _ => {
+                        panic!("Unsupported type")
+                    }
+                };
+
+                println!(
+                    "Field name: {:?}, Field data: {:?} Field length: {:?}",
+                    field.name(),
+                    cs,
+                    cs.len(),
+                );
             }
         },
     )?;
