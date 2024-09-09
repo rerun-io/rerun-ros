@@ -1,77 +1,41 @@
-# Pixi is a package management tool for developers.
-# Before running a task, pixi ensures that all listed dependencies are installed first.echop
-#
-# Pixi is not required for rerun, but it is a convenient way to install the
-# dependencies required for this example.
-#
-# https://prefix.dev/docs/pixi/overview
-#
-# Use `pixi task list` to list the available tasks,
-# and `pixi run TASK` to run it (e.g. `pixi run example`).
-
 [project]
 name = "rerun-ros"
 authors = ["rerun.io <opensource@rerun.io>"]
-channels = ["conda-forge"]
+channels = ["robostack-staging", "conda-forge"]
 description = "rerun-ros"
 homepage = "https://rerun.io"
 license = "MIT OR Apache-2.0"
 
-platforms = ["linux-64", "linux-aarch64", "osx-arm64", "osx-64", "win-64"]
+platforms = ["linux-64"]
 readme = "README.md"
 repository = "https://github.com/rerun-io/rerun-ros"
 version = "0.1.0"
 
-
 [tasks]
-# ------------------------------------------------------------------------------------------
-# C++ stuff:
-# Note: extra CLI argument after `pixi run TASK` are passed to the task cmd.
+install-cargo-ament-build = "cargo install cargo-ament-build"
+build = { cmd = "colcon build", depends-on = ["install-cargo-ament-build"] }
 
-# Clean C++ build artifacts
-clean = { cmd = "rm -rf build bin CMakeFiles/" }
-print-env = { cmd = "echo $PATH" }
-prepare = "cmake -G 'Ninja' -B build -S . -DCMAKE_BUILD_TYPE=RelWithDebInfo"
-
-# Build C++ example
-build = { cmd = "cmake --build build --config RelWithDebInfo --target all", depends_on = [
-    "prepare",
-] }
-
-# Run C++ example
-example = { cmd = "build/PROJ_NAME", depends_on = ["build"] }
-
-# Format C++ code
-cpp-fmt = { cmd = "clang-format -i src/*.[hc]pp" }
-
-# Check formatting of C++ code
-cpp-fmt-check = { cmd = "clang-format --dry-run --Werror -i src/*.[hc]pp" }
-
-# ------------------------------------------------------------------------------------------
-# Python stuff:
-
-# Run first ruff fix, then ruff format, order is important see also https://twitter.com/charliermarsh/status/1717229721954799727
-py-fmt = "ruff check --fix --config pyproject.toml . && ruff format --config pyproject.toml ."
-py-fmt-check = "ruff check --config pyproject.toml . && ruff format --check --config pyproject.toml"
-py-lint = "mypy --install-types --non-interactive --no-warn-unused-ignore"
-
-# ------------------------------------------------------------------------------------------
-# General stuff:
-lint-typos = "typos"
-
+[activation]
+env = { ROS_DISTRO = "humble" }
+scripts = ["install/setup.bash", "install/local_setup.bash"]
 
 [dependencies]
-# C++ build-tools:
-cmake = "3.27.6"
-clang-tools = ">=15,<16" # clang-format
-cxx-compiler = "1.6.0.*"
-ninja = "1.11.1"
+ros-humble-rcl = ">=5.3.7,<6"
+ros-humble-builtin-interfaces = ">=1.2.1,<2"
+ros-humble-rcl-interfaces = ">=1.2.1,<2"
+ros-humble-rosgraph-msgs = ">=1.2.1,<2"
+clangdev = ">=18.1.8,<19"
+rust = "1.74.0.*"
+ros-humble-rosidl-default-generators = ">=1.2.0,<2"
+ros-humble-ros2cli = ">=0.18.8,<0.19"
+ros-humble-ros2run = ">=0.18.8,<0.19"
+ros-humble-ros2cli-common-extensions = ">=0.1.1,<0.2"
+ros-humble-ros-core = ">=0.10.0,<0.11"
+ros-humble-geometry-msgs = ">=4.2.3,<5"
 
-# Python stuff:
-mypy = "1.8.0"
-ruff = "0.3.7"
+[build-dependencies]
+colcon-common-extensions = ">=0.3.0,<0.4"
 
-types-requests = ">=2.31,<3" # mypy type hint stubs for generate_changelog.py
-
-# General stuff:
-typos = ">=1.16.20"
+[pypi-dependencies]
+colcon-cargo = { git = "https://github.com/colcon/colcon-cargo.git" }
+colcon-ros-cargo = { git = "https://github.com/colcon/colcon-ros-cargo.git" }

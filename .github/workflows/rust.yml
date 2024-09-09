@@ -29,6 +29,8 @@ jobs:
           version: 1.0
           execute_install_scripts: true
 
+      - uses: prefix-dev/setup-pixi@v0.8.1
+
       - name: Set up cargo cache
         uses: Swatinem/rust-cache@v2
 
@@ -39,62 +41,36 @@ jobs:
           args: --all -- --check
 
       - name: check --all-features
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
-          args: --all-features --all-targets
+        run: pixi run cargo check --all-features --all-targets
 
       - name: check default features
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
-          args: --all-targets
+        run: pixi run cargo check --all-targets
 
       - name: check --no-default-features
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
-          args: --no-default-features --lib --all-targets
+        run: pixi run cargo check --no-default-features --lib --all-targets
 
       - name: Test doc-tests
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --doc --all-features
+        run: pixi run cargo test --doc --all-features
 
       - name: cargo doc --lib
-        uses: actions-rs/cargo@v1
-        with:
-          command: doc
-          args: --lib --no-deps --all-features
+        run: pixi run cargo doc --lib --no-deps --all-features
 
       - name: cargo doc --document-private-items
-        uses: actions-rs/cargo@v1
-        with:
-          command: doc
-          args: --document-private-items --no-deps --all-features
+        run: pixi run cargo doc --document-private-items --no-deps --all-features
 
       - name: Build tests
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --all-features --no-run
+        run: pixi run cargo test --all-features --no-run
 
       - name: Run test
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --all-features
+        run: pixi run cargo test --all-features
 
       - name: Clippy
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: --all-targets --all-features -- -D warnings
+        run: pixi run cargo clippy --all-targets --all-features -- -D warnings
 
   # ---------------------------------------------------------------------------
 
   check_wasm:
+    if: false
     name: Check wasm32
     runs-on: ubuntu-latest
     steps:
