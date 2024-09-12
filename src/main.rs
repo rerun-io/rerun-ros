@@ -28,9 +28,7 @@ fn main() -> Result<(), Error> {
     for ((topic_name, _frame_id), (ros_type, _converter)) in config_parser.conversions() {
         let msg_spec = rerun_ros::ros_introspection::MsgSpec::new(ros_type)?;
 
-        println!(
-            "Subscribing to topic: {topic_name} with type: {ros_type}"
-        );
+        println!("Subscribing to topic: {topic_name} with type: {ros_type}");
         let _generic_subscription = node.create_generic_subscription(
             topic_name,
             ros_type,
