@@ -58,3 +58,74 @@ impl ConfigParser {
         &self.conversions
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs::File;
+    use std::io::Write;
+    use tempfile::tempdir;
+
+    #[test]
+    fn test_config_parser_new_valid_file() {
+        // Create a temporary directory
+        let dir = tempdir().unwrap();
+        let file_path = dir.path().join("config.toml");
+
+        // Write a valid TOML configuration to the file
+        let mut file = File::create(&file_path).unwrap();
+        writeln!(
+            file,
+            r#"
+            [[conversion]]
+            topic = "topic1"
+            frame_id = "frame1"
+            ros_type = "type1"
+            converter = "converter1"
+            [[conversion]]
+            topic = "topic2"
+            frame_id = "frame2"
+            ros_type = "type2"
+            converter = "converter2"
+            "#
+        )
+        .unwrap();
+
+        // Create a ConfigParser instance
+        let config_parser = ConfigParser::new(file_path.to_str().unwrap()).unwrap();
+
+        // Check the conversions hashmap
+        let conversions = config_parser.conversions();
+        assert_eq!(conversions.len(), 2);
+        assert_eq!(
+            conversions.get(&("topic1".to_string(), "frame1".to_string())),
+            Some(&("type1".to_string(), "converter1".to_string()))
+        );
+        assert_eq!(
+            conversions.get(&("topic2".to_string(), "frame2".to_string())),
+            Some(&("type2".to_string(), "converter2".to_string()))
+        );
+    }
+
+    #[test]
+    fn test_config_parser_new_invalid_file() {
+        // Create a temporary directory
+        let dir = tempdir().unwrap();
+        let file_path = dir.path().join("config.toml");
+
+        // Write an invalid TOML configuration to the file
+        let mut file = File::create(&file_path).unwrap();
+        writeln!(file, "invalid_toml").unwrap();
+
+        // Attempt to create a ConfigParser instance and expect an error
+        let result = ConfigParser::new(file_path.to_str().unwrap());
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_config_parser_new_missing_file() {
+        // Attempt to create a ConfigParser instance with a non-existent file
+        let result = ConfigParser::new("non_existent_file.toml");
+        assert!(result.is_err());
+    }
+}

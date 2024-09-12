@@ -205,5 +205,6 @@ regex = "1.10.6"
 rosidl_runtime_rs = { git = "https://github.com/esteve/ros2_rust.git", branch = "generic-subscriptions" }
 serde = { version = "1.0.210", features = ["derive"] }
 serde_derive = "1.0.210"
+tempfile = "3.12.0"
 toml = "0.8.19"
 widestring = "1.1.0"
