@@ -1,11 +1,11 @@
 [[conversion]]
 topic = "topic/foo"
 frame_id = "frame1"
-ros_type = "std/msgs/String"
+ros_type = "std_msgs/msg/String"
 converter = "StringConverter"
 
 [[conversion]]
 topic = "topic/bar"
 frame_id = "frame2"
-ros_type = "std/msgs/Int32String"
+ros_type = "std_msgs/msg/Int32"
 converter = "Int32Converter"
