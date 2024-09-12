@@ -9,3 +9,9 @@ topic = "topic/bar"
 frame_id = "frame2"
 ros_type = "std_msgs/msg/Int32"
 entity_path = "foo/bar2"
+
+[[conversion]]
+topic = "topic"
+frame_id = "frame2"
+ros_type = "geometry_msgs/msg/Transform"
+entity_path = "foo/bar3"

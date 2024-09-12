@@ -1,7 +1,11 @@
 use anyhow::{Error, Result};
 use clap::Parser;
+use rerun;
 use rerun_ros::config::ConfigParser;
+use rerun_ros::converters::ConverterRegistry;
 use std::env;
+use std::io::Cursor;
+use std::slice;
 use std::sync::Arc;
 
 /// A bridge between rerun and ROS
@@ -21,29 +25,40 @@ fn main() -> Result<(), Error> {
     }
 
     println!("Starting bridge");
-    let config_parser = ConfigParser::new(&bridge_args.config_file)?;
-
     let context = rclrs::Context::new(env::args())?;
     let node = rclrs::create_node(&context, "rerun_ros_bridge")?;
-    // Clippy does not like iterating over the keys of a HashMap, so we collect it into a Vec
-    let config_entries: Vec<_> = config_parser.conversions().iter().collect();
+
+    let converter_registry = Arc::new(ConverterRegistry::load_configuration());
+    let config_parser = Arc::new(ConfigParser::new(&bridge_args.config_file)?);
+
+    let rec = Arc::new(rerun::RecordingStreamBuilder::new("rerun_ros_bridge").connect()?);
 
     // Prevent the subscriptions from being dropped
     let mut _subscriptions = Vec::new();
-    for ((topic_name, _frame_id), (ros_type, _entity_path)) in config_entries {
-        let msg_spec = rerun_ros::ros_introspection::MsgSpec::new(ros_type)?;
 
+    for ((topic_name, _frame_id), (ros_type, _entity_path)) in config_parser.conversions().clone() {
+        let msg_spec = rerun_ros::ros_introspection::MsgSpec::new(&ros_type)?;
         println!("Subscribing to topic: {topic_name} with type: {ros_type}");
-        let _generic_subscription = node.create_generic_subscription(
-            topic_name,
-            ros_type,
+        let rec = Arc::clone(&rec);
+        let converter_registry = Arc::clone(&converter_registry);
+        let generic_subscription = node.create_generic_subscription(
+            &topic_name,
+            &ros_type.clone(),
             rclrs::QOS_PROFILE_DEFAULT,
-            move |_msg: rclrs::SerializedMessage| {
-                let _msg_spec = Arc::new(&msg_spec);
-                // Process message and pass it to rerun
+            move |msg: rclrs::SerializedMessage| {
+                println!("Received message");
+                let serialized_message = &msg.handle().get_rcl_serialized_message().lock().unwrap();
+                let buffer = serialized_message.buffer;
+                let buffer_length = serialized_message.buffer_length;
+                // Wrap data in a CDR buffer
+                let mut cdr_buffer =
+                    Cursor::new(unsafe { slice::from_raw_parts(buffer, buffer_length) }.to_vec());
+                if let Err(e) = converter_registry.process(&rec, &ros_type, &mut cdr_buffer) {
+                    eprintln!("Error processing message: {e}");
+                }
             },
         )?;
-        _subscriptions.push(_generic_subscription);
+        _subscriptions.push(generic_subscription);
     }
-    Ok(())
+    rclrs::spin(node).map_err(|err| err.into())
 }
