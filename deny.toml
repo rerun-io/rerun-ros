@@ -83,4 +83,4 @@ unknown-registry = "deny"
 unknown-git = "deny"
 
 [sources.allow-org]
-github = ["emilk", "rerun-io"]
+github = ["emilk", "rerun-io", "esteve"]
