@@ -297,8 +297,8 @@ environments:
       - conda: https://conda.anaconda.org/robostack-staging/linux-64/ros2-distro-mutex-0.5.0-humble.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/linux-64/rosdistro-0.9.0-py311h38be061_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/rospkg-1.5.1-pyhd8ed1ab_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/linux-64/rust-1.74.0-h70c747d_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/noarch/rust-std-x86_64-unknown-linux-gnu-1.74.0-h2c6d0dc_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/linux-64/rust-1.76.0-h70c747d_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/noarch/rust-std-x86_64-unknown-linux-gnu-1.76.0-h2c6d0dc_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/setuptools-72.1.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/six-1.16.0-pyh6c4a22f_0.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/snowballstemmer-2.2.0-pyhd8ed1ab_0.tar.bz2
@@ -7364,40 +7364,40 @@ packages:
   timestamp: 1713573999299
 - kind: conda
   name: rust
-  version: 1.74.0
+  version: 1.76.0
   build: h70c747d_0
   subdir: linux-64
-  url: https://conda.anaconda.org/conda-forge/linux-64/rust-1.74.0-h70c747d_0.conda
-  sha256: e6ffc3fe6ef3fc82277be33168725ecbd002c5f103f8dac79f457cb96e2740e2
-  md5: 47a3902182265f47c624e918610088e9
+  url: https://conda.anaconda.org/conda-forge/linux-64/rust-1.76.0-h70c747d_0.conda
+  sha256: 7d2e7821520862b3ac5829677de1c18a91a50621fae86122c709cc219e753040
+  md5: 4ff9e2eff880011bcb18d3274aa44f96
   depends:
   - gcc_impl_linux-64
   - libgcc-ng >=12
   - libzlib >=1.2.13,<2.0.0a0
-  - rust-std-x86_64-unknown-linux-gnu 1.74.0 h2c6d0dc_0
+  - rust-std-x86_64-unknown-linux-gnu 1.76.0 h2c6d0dc_0
   license: MIT
   license_family: MIT
   purls: []
-  size: 187647601
-  timestamp: 1700249558976
+  size: 189872921
+  timestamp: 1707423016244
 - kind: conda
   name: rust-std-x86_64-unknown-linux-gnu
-  version: 1.74.0
+  version: 1.76.0
   build: h2c6d0dc_0
   subdir: noarch
   noarch: generic
-  url: https://conda.anaconda.org/conda-forge/noarch/rust-std-x86_64-unknown-linux-gnu-1.74.0-h2c6d0dc_0.conda
-  sha256: 3ab502496029c505dacdd5c9813662d03913e1f1e4a9ce5539bbdd63b0d905af
-  md5: 5b179502c9715a250198f24b47a08cdb
+  url: https://conda.anaconda.org/conda-forge/noarch/rust-std-x86_64-unknown-linux-gnu-1.76.0-h2c6d0dc_0.conda
+  sha256: 5438720aa554fb7ce68fd544f2e35ac0a24c4efdab9cae7dd1371bf699a74ec5
+  md5: b27ecce0eb266a44186b8a5b7434d59e
   depends:
   - __unix
   constrains:
-  - rust >=1.74.0,<1.74.1.0a0
+  - rust >=1.76.0,<1.76.1.0a0
   license: MIT
   license_family: MIT
   purls: []
-  size: 33742239
-  timestamp: 1700249382209
+  size: 33981347
+  timestamp: 1707422883354
 - kind: conda
   name: setuptools
   version: 72.1.0

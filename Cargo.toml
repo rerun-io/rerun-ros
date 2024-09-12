@@ -11,7 +11,7 @@ name = "rerun_ros"
 publish = false                                                      # TODO: set to `true` if you plan on publishing the crate
 readme = "README.md"
 repository = "https://github.com/rerun-io/rerun-ros"
-rust-version = "1.74"
+rust-version = "1.76"
 version = "0.1.0"
 
 [package.metadata.docs.rs]
