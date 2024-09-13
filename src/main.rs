@@ -25,6 +25,7 @@ fn main() -> Result<(), Error> {
 
     let context = rclrs::Context::new(env::args())?;
     let node = rclrs::create_node(&context, "rerun_ros_bridge")?;
+    // Clippy does not like iterating over the keys of a HashMap, so we collect it into a Vec
     let config_entries: Vec<_> = config_parser.conversions().iter().collect();
     for ((topic_name, _frame_id), (ros_type, _converter)) in config_entries {
         let msg_spec = rerun_ros::ros_introspection::MsgSpec::new(ros_type)?;
