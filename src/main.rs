@@ -25,7 +25,8 @@ fn main() -> Result<(), Error> {
 
     let context = rclrs::Context::new(env::args())?;
     let node = rclrs::create_node(&context, "rerun_ros_bridge")?;
-    for ((topic_name, _frame_id), (ros_type, _converter)) in config_parser.conversions() {
+    let config_entries: Vec<_> = config_parser.conversions().iter().collect();
+    for ((topic_name, _frame_id), (ros_type, _converter)) in config_entries {
         let msg_spec = rerun_ros::ros_introspection::MsgSpec::new(ros_type)?;
 
         println!("Subscribing to topic: {topic_name} with type: {ros_type}");
