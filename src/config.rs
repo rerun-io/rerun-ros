@@ -10,7 +10,7 @@ struct Conversion {
     topic: String,
     frame_id: String,
     ros_type: String,
-    converter: String,
+    entity_path: String,
 }
 
 /// Parses and holds conversion configurations.
@@ -43,7 +43,7 @@ impl ConfigParser {
             for conversion in &config["conversion"] {
                 conversions.insert(
                     (conversion.topic.clone(), conversion.frame_id.clone()),
-                    (conversion.ros_type.clone(), conversion.converter.clone()),
+                    (conversion.ros_type.clone(), conversion.entity_path.clone()),
                 );
             }
 
@@ -81,12 +81,12 @@ mod tests {
             topic = "topic1"
             frame_id = "frame1"
             ros_type = "type1"
-            converter = "converter1"
+            entity_path = "foo/bar1"
             [[conversion]]
             topic = "topic2"
             frame_id = "frame2"
             ros_type = "type2"
-            converter = "converter2"
+            entity_path = "foo/bar2"
             "#
         )
         .unwrap();

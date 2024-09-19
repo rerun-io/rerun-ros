@@ -27,7 +27,10 @@ fn main() -> Result<(), Error> {
     let node = rclrs::create_node(&context, "rerun_ros_bridge")?;
     // Clippy does not like iterating over the keys of a HashMap, so we collect it into a Vec
     let config_entries: Vec<_> = config_parser.conversions().iter().collect();
-    for ((topic_name, _frame_id), (ros_type, _converter)) in config_entries {
+
+    // Prevent the subscriptions from being dropped
+    let mut _subscriptions = Vec::new();
+    for ((topic_name, _frame_id), (ros_type, _entity_path)) in config_entries {
         let msg_spec = rerun_ros::ros_introspection::MsgSpec::new(ros_type)?;
 
         println!("Subscribing to topic: {topic_name} with type: {ros_type}");
@@ -40,6 +43,7 @@ fn main() -> Result<(), Error> {
                 // Process message and pass it to rerun
             },
         )?;
+        _subscriptions.push(_generic_subscription);
     }
     Ok(())
 }
