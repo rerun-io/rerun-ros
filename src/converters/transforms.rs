@@ -28,6 +28,7 @@ impl Converter for QuaternionConverter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let cdr_quaternion =
@@ -39,7 +40,7 @@ impl Converter for QuaternionConverter {
             cdr_quaternion.w as f32,
         ]);
 
-        rec.log("translate", &rerun::Transform3D::from_rotation(rotation))?;
+        rec.log(entity_path, &rerun::Transform3D::from_rotation(rotation))?;
         Ok(())
     }
 }
@@ -57,6 +58,7 @@ impl Converter for TransformConverter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let cdr_transform = cdr::deserialize_from::<_, CDRTransform, _>(cdr_buffer, cdr::Infinite)?;
@@ -73,7 +75,7 @@ impl Converter for TransformConverter {
         ]);
 
         rec.log(
-            "translate",
+            entity_path,
             &rerun::Transform3D::from_translation_rotation(translation, rotation),
         )?;
         Ok(())

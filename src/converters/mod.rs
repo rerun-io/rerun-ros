@@ -37,11 +37,12 @@ impl ConverterRegistry {
     pub fn process(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         ros_type: &str,
         message: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let converter = self.get(ros_type).unwrap();
-        converter.convert(rec, message)?;
+        converter.convert(rec, entity_path, message)?;
         Ok(())
     }
 

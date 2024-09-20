@@ -7,6 +7,7 @@ pub trait Converter: Send + Sync {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         message: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error>;
 }

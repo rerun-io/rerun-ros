@@ -36,7 +36,7 @@ fn main() -> Result<(), Error> {
     // Prevent the subscriptions from being dropped
     let mut _subscriptions = Vec::new();
 
-    for ((topic_name, _frame_id), (ros_type, _entity_path)) in config_parser.conversions().clone() {
+    for ((topic_name, frame_id), (ros_type, entity_path)) in config_parser.conversions().clone() {
         let msg_spec = rerun_ros::ros_introspection::MsgSpec::new(&ros_type)?;
         println!("Subscribing to topic: {topic_name} with type: {ros_type}");
         let rec = Arc::clone(&rec);
@@ -53,7 +53,9 @@ fn main() -> Result<(), Error> {
                 // Wrap data in a CDR buffer
                 let mut cdr_buffer =
                     Cursor::new(unsafe { slice::from_raw_parts(buffer, buffer_length) }.to_vec());
-                if let Err(e) = converter_registry.process(&rec, &ros_type, &mut cdr_buffer) {
+                if let Err(e) =
+                    converter_registry.process(&rec, &ros_type, &entity_path, &mut cdr_buffer)
+                {
                     eprintln!("Error processing message: {e}");
                 }
             },

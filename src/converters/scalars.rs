@@ -11,10 +11,11 @@ impl Converter for Int8Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let value = cdr::deserialize_from::<_, i8, _>(cdr_buffer, cdr::Infinite)?;
-        rec.log("scalar", &rerun::Scalar::new(value as f64))?;
+        rec.log(entity_path, &rerun::Scalar::new(value as f64))?;
         Ok(())
     }
 }
@@ -26,10 +27,11 @@ impl Converter for Int16Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let value = cdr::deserialize_from::<_, i16, _>(cdr_buffer, cdr::Infinite)?;
-        rec.log("scalar", &rerun::Scalar::new(value as f64))?;
+        rec.log(entity_path, &rerun::Scalar::new(value as f64))?;
         Ok(())
     }
 }
@@ -41,10 +43,11 @@ impl Converter for Int32Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let value = cdr::deserialize_from::<_, i32, _>(cdr_buffer, cdr::Infinite)?;
-        rec.log("scalar", &rerun::Scalar::new(value as f64))?;
+        rec.log(entity_path, &rerun::Scalar::new(value as f64))?;
         Ok(())
     }
 }
@@ -56,10 +59,11 @@ impl Converter for Int64Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let value = cdr::deserialize_from::<_, i64, _>(cdr_buffer, cdr::Infinite)?;
-        rec.log("scalar", &rerun::Scalar::new(value as f64))?;
+        rec.log(entity_path, &rerun::Scalar::new(value as f64))?;
         Ok(())
     }
 }
@@ -71,10 +75,11 @@ impl Converter for Float32Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let value = cdr::deserialize_from::<_, f32, _>(cdr_buffer, cdr::Infinite)?;
-        rec.log("scalar", &rerun::Scalar::new(value as f64))?;
+        rec.log(entity_path, &rerun::Scalar::new(value as f64))?;
         Ok(())
     }
 }
@@ -86,10 +91,11 @@ impl Converter for Float64Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let value = cdr::deserialize_from::<_, f64, _>(cdr_buffer, cdr::Infinite)?;
-        rec.log("scalar", &rerun::Scalar::new(value))?;
+        rec.log(entity_path, &rerun::Scalar::new(value))?;
         Ok(())
     }
 }
@@ -101,10 +107,11 @@ impl Converter for UInt8Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let value = cdr::deserialize_from::<_, u8, _>(cdr_buffer, cdr::Infinite)?;
-        rec.log("scalar", &rerun::Scalar::new(value as f64))?;
+        rec.log(entity_path, &rerun::Scalar::new(value as f64))?;
         Ok(())
     }
 }
@@ -116,10 +123,11 @@ impl Converter for UInt16Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let value = cdr::deserialize_from::<_, u16, _>(cdr_buffer, cdr::Infinite)?;
-        rec.log("scalar", &rerun::Scalar::new(value as f64))?;
+        rec.log(entity_path, &rerun::Scalar::new(value as f64))?;
         Ok(())
     }
 }
@@ -131,10 +139,11 @@ impl Converter for UInt32Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let value = cdr::deserialize_from::<_, u32, _>(cdr_buffer, cdr::Infinite)?;
-        rec.log("scalar", &rerun::Scalar::new(value as f64))?;
+        rec.log(entity_path, &rerun::Scalar::new(value as f64))?;
         Ok(())
     }
 }
@@ -146,10 +155,11 @@ impl Converter for UInt64Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let value = cdr::deserialize_from::<_, u64, _>(cdr_buffer, cdr::Infinite)?;
-        rec.log("scalar", &rerun::Scalar::new(value as f64))?;
+        rec.log(entity_path, &rerun::Scalar::new(value as f64))?;
         Ok(())
     }
 }
