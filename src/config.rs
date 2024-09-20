@@ -99,11 +99,11 @@ mod tests {
         assert_eq!(conversions.len(), 2);
         assert_eq!(
             conversions.get(&("topic1".to_owned(), "frame1".to_owned())),
-            Some(&("type1".to_owned(), "converter1".to_owned()))
+            Some(&("type1".to_owned(), "foo/bar1".to_owned()))
         );
         assert_eq!(
             conversions.get(&("topic2".to_owned(), "frame2".to_owned())),
-            Some(&("type2".to_owned(), "converter2".to_owned()))
+            Some(&("type2".to_owned(), "foo/bar2".to_owned()))
         );
     }
 
