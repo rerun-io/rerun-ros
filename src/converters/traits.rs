@@ -6,7 +6,6 @@ use std::sync::Arc;
 pub trait Converter: Send + Sync {
     fn convert(
         &self,
-        config: &Conversion,
         rec: &Arc<rerun::RecordingStream>,
         message: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error>;
