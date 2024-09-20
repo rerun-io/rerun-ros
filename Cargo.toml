@@ -11,7 +11,7 @@ name = "rerun_ros"
 publish = false                                                      # TODO: set to `true` if you plan on publishing the crate
 readme = "README.md"
 repository = "https://github.com/rerun-io/rerun-ros"
-rust-version = "1.74"
+rust-version = "1.76"
 version = "0.1.0"
 
 [package.metadata.docs.rs]
@@ -198,7 +198,13 @@ ref_patterns = "allow"          # It's nice to avoid ref pattern, but there are 
 ament_rs = "0.2.1"
 anyhow = "1.0.86"
 cdr = "0.2.4"
+clap = { version = "4.5.17", features = ["derive"] }
+log = "0.4.22"
 rclrs = { git = "https://github.com/esteve/ros2_rust.git", branch = "generic-subscriptions" }
 regex = "1.10.6"
 rosidl_runtime_rs = { git = "https://github.com/esteve/ros2_rust.git", branch = "generic-subscriptions" }
+serde = { version = "1.0.210", features = ["derive"] }
+serde_derive = "1.0.210"
+tempfile = "3.12.0"
+toml = "0.8.19"
 widestring = "1.1.0"

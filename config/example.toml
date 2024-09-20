@@ -1,0 +1,11 @@
+[[conversion]]
+topic = "topic/foo"
+frame_id = "frame1"
+ros_type = "std_msgs/msg/String"
+entity_path = "foo/bar1"
+
+[[conversion]]
+topic = "topic/bar"
+frame_id = "frame2"
+ros_type = "std_msgs/msg/Int32"
+entity_path = "foo/bar2"
