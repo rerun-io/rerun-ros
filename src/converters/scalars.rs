@@ -11,6 +11,8 @@ impl Converter for Int8Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
@@ -27,6 +29,8 @@ impl Converter for Int16Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
@@ -43,6 +47,8 @@ impl Converter for Int32Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
@@ -59,6 +65,8 @@ impl Converter for Int64Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
@@ -75,6 +83,8 @@ impl Converter for Float32Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
@@ -91,6 +101,8 @@ impl Converter for Float64Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
@@ -107,6 +119,8 @@ impl Converter for UInt8Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
@@ -123,6 +137,8 @@ impl Converter for UInt16Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
@@ -139,6 +155,8 @@ impl Converter for UInt32Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
@@ -155,6 +173,8 @@ impl Converter for UInt64Converter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {

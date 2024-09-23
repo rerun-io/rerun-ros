@@ -19,6 +19,46 @@ pub struct ConverterRegistry {
     converters: HashMap<String, Arc<dyn Converter>>,
 }
 
+/// A registry for managing and using different types of converters.
+///
+/// The `ConverterRegistry` struct provides methods to register, retrieve, and process
+/// converters. Converters are used to transform CDR representations of ROS messages
+/// into the rerun system.
+///
+/// # Methods
+///
+/// - `new() -> Self`
+///
+///   Creates a new, empty `ConverterRegistry`.
+///
+/// - `register(&mut self, name: &str, converter: Arc<dyn Converter>)`
+///
+///   Registers a new converter with the given name. The converter is stored in the registry
+///   and can be retrieved or used later.
+///
+/// - `get(&self, name: &str) -> Option<&Arc<dyn Converter>>`
+///
+///   Retrieves a reference to a converter by its name. Returns `None` if the converter
+///   is not found.
+///
+/// - `process(&self, rec: &Arc<rerun::RecordingStream>, topic: &str, frame_id: &Option<String>, entity_path: &str, ros_type: &str, message: &mut Cursor<Vec<u8>>) -> Result<(), Error>`
+///
+///   Processes a message using the converter associated with the given ROS type. The converter
+///   transforms the message read from a `Cursor`.
+///
+/// - `load_configuration() -> Self`
+///
+///   Loads a predefined set of converters into the registry. This method registers converters
+///   for various standard ROS message types, such as `Int8`, `Int16`, `Float32`, `Transform`,
+///   and `Quaternion`.
+///
+/// # Example
+///
+/// ```rust
+/// let registry = ConverterRegistry::load_configuration();
+/// let converter = registry.get("std_msgs/msg/Int8").unwrap();
+/// // Use the converter...
+/// ```
 impl ConverterRegistry {
     pub fn new() -> Self {
         Self {
@@ -37,12 +77,14 @@ impl ConverterRegistry {
     pub fn process(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
         entity_path: &str,
         ros_type: &str,
         message: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
         let converter = self.get(ros_type).unwrap();
-        converter.convert(rec, entity_path, message)?;
+        converter.convert(rec, topic, frame_id, entity_path, message)?;
         Ok(())
     }
 

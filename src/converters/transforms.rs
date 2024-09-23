@@ -28,9 +28,12 @@ impl Converter for QuaternionConverter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
+        // TODO(esteve): pass topic and frame_id to rerun
         let cdr_quaternion =
             cdr::deserialize_from::<_, CDRQuaternion, _>(cdr_buffer, cdr::Infinite)?;
         let rotation = rerun::Quaternion::from_xyzw([
@@ -58,6 +61,8 @@ impl Converter for TransformConverter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {

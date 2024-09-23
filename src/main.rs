@@ -38,11 +38,14 @@ fn main() -> Result<(), Error> {
 
     for ((topic_name, frame_id), (ros_type, entity_path)) in config_parser.conversions().clone() {
         let msg_spec = rerun_ros::ros_introspection::MsgSpec::new(&ros_type)?;
-        println!("Subscribing to topic: {topic_name} with type: {ros_type}");
+        println!(
+            "Subscribing to topic: {topic_name} and frame_id {} with type: {ros_type}",
+            frame_id.clone().unwrap_or("None".to_string()),
+        );
         let rec = Arc::clone(&rec);
         let converter_registry = Arc::clone(&converter_registry);
         let generic_subscription = node.create_generic_subscription(
-            &topic_name,
+            &topic_name.clone(),
             &ros_type.clone(),
             rclrs::QOS_PROFILE_DEFAULT,
             move |msg: rclrs::SerializedMessage| {
@@ -53,9 +56,14 @@ fn main() -> Result<(), Error> {
                 // Wrap data in a CDR buffer
                 let mut cdr_buffer =
                     Cursor::new(unsafe { slice::from_raw_parts(buffer, buffer_length) }.to_vec());
-                if let Err(e) =
-                    converter_registry.process(&rec, &ros_type, &entity_path, &mut cdr_buffer)
-                {
+                if let Err(e) = converter_registry.process(
+                    &rec,
+                    &topic_name,
+                    &frame_id,
+                    &ros_type,
+                    &entity_path,
+                    &mut cdr_buffer,
+                ) {
                     eprintln!("Error processing message: {e}");
                 }
             },

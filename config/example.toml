@@ -1,17 +1,21 @@
 [[conversion]]
 topic = "topic/foo"
-frame_id = "frame1"
 ros_type = "std_msgs/msg/String"
 entity_path = "foo/bar1"
 
 [[conversion]]
 topic = "topic/bar"
-frame_id = "frame2"
 ros_type = "std_msgs/msg/Int32"
 entity_path = "foo/bar2"
 
 [[conversion]]
 topic = "topic"
 frame_id = "frame2"
+ros_type = "geometry_msgs/msg/Transform"
+entity_path = "foo/bar3"
+
+[[conversion]]
+topic = "topic"
+frame_id = "frame4"
 ros_type = "geometry_msgs/msg/Transform"
 entity_path = "foo/bar3"
