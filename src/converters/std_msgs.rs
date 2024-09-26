@@ -1,8 +1,17 @@
+use crate::converters::builtin_interfaces;
 use crate::converters::traits::Converter;
 use anyhow::{Error, Result};
+use cdr;
 use rerun;
+use serde_derive::{Deserialize, Serialize};
 use std::io::Cursor;
 use std::sync::Arc;
+
+#[derive(Debug, Deserialize, Serialize, PartialEq)]
+pub(crate) struct CDRHeader {
+    stamp: builtin_interfaces::CDRTime,
+    frame_id: String,
+}
 
 // Converter for std_msgs/msg/Int8.msg
 pub struct Int8Converter {}

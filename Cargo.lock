@@ -7133,9 +7133,5 @@ dependencies = [
 ]
 
 [[patch.unused]]
-name = "rerun-ros"
-version = "0.1.0"
-
-[[patch.unused]]
 name = "rerun_ros"
 version = "0.1.0"

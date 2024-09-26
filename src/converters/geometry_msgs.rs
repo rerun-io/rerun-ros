@@ -1,3 +1,5 @@
+use crate::converters::builtin_interfaces;
+use crate::converters::std_msgs;
 use crate::converters::traits::Converter;
 use anyhow::{Error, Result};
 use cdr;
@@ -77,6 +79,47 @@ impl Converter for TransformConverter {
             cdr_transform.rotation.y as f32,
             cdr_transform.rotation.z as f32,
             cdr_transform.rotation.w as f32,
+        ]);
+
+        rec.log(
+            entity_path,
+            &rerun::Transform3D::from_translation_rotation(translation, rotation),
+        )?;
+        Ok(())
+    }
+}
+
+#[derive(Debug, Deserialize, Serialize, PartialEq)]
+struct CDRTransformStamped {
+    header: std_msgs::CDRHeader,
+    child_frame_id: String,
+    transform: CDRTransform,
+}
+
+// Converter for geometry_msgs/msg/TransformStamped.msg
+pub struct TransformStampedConverter {}
+
+impl Converter for TransformStampedConverter {
+    fn convert(
+        &self,
+        rec: &Arc<rerun::RecordingStream>,
+        topic: &str,
+        frame_id: &Option<String>,
+        entity_path: &str,
+        cdr_buffer: &mut Cursor<Vec<u8>>,
+    ) -> Result<(), Error> {
+        let cdr_transform_stamped =
+            cdr::deserialize_from::<_, CDRTransformStamped, _>(cdr_buffer, cdr::Infinite)?;
+        let translation = rerun::Vec3D::new(
+            cdr_transform_stamped.transform.translation.x as f32,
+            cdr_transform_stamped.transform.translation.y as f32,
+            cdr_transform_stamped.transform.translation.z as f32,
+        );
+        let rotation = rerun::Quaternion::from_xyzw([
+            cdr_transform_stamped.transform.rotation.x as f32,
+            cdr_transform_stamped.transform.rotation.y as f32,
+            cdr_transform_stamped.transform.rotation.z as f32,
+            cdr_transform_stamped.transform.rotation.w as f32,
         ]);
 
         rec.log(

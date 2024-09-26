@@ -1,10 +1,9 @@
-mod scalars;
+mod builtin_interfaces;
+mod geometry_msgs;
+mod std_msgs;
 mod traits;
-mod transforms;
 
-use scalars::*;
-use traits::*;
-use transforms::*;
+use crate::converters::traits::Converter;
 
 use std::collections::HashMap;
 use std::sync::Arc;
@@ -90,23 +89,38 @@ impl ConverterRegistry {
 
     pub fn load_configuration() -> Self {
         let mut registry = ConverterRegistry::new();
-        registry.register("std_msgs/msg/Int8", Arc::new(Int8Converter {}));
-        registry.register("std_msgs/msg/Int16", Arc::new(Int16Converter {}));
-        registry.register("std_msgs/msg/Int32", Arc::new(Int32Converter {}));
-        registry.register("std_msgs/msg/Int64", Arc::new(Int64Converter {}));
-        registry.register("std_msgs/msg/UInt8", Arc::new(UInt8Converter {}));
-        registry.register("std_msgs/msg/UInt16", Arc::new(UInt16Converter {}));
-        registry.register("std_msgs/msg/UInt32", Arc::new(UInt32Converter {}));
-        registry.register("std_msgs/msg/UInt64", Arc::new(UInt64Converter {}));
-        registry.register("std_msgs/msg/Float32", Arc::new(Float32Converter {}));
-        registry.register("std_msgs/msg/Float64", Arc::new(Float64Converter {}));
+        registry.register("std_msgs/msg/Int8", Arc::new(std_msgs::Int8Converter {}));
+        registry.register("std_msgs/msg/Int16", Arc::new(std_msgs::Int16Converter {}));
+        registry.register("std_msgs/msg/Int32", Arc::new(std_msgs::Int32Converter {}));
+        registry.register("std_msgs/msg/Int64", Arc::new(std_msgs::Int64Converter {}));
+        registry.register("std_msgs/msg/UInt8", Arc::new(std_msgs::UInt8Converter {}));
+        registry.register(
+            "std_msgs/msg/UInt16",
+            Arc::new(std_msgs::UInt16Converter {}),
+        );
+        registry.register(
+            "std_msgs/msg/UInt32",
+            Arc::new(std_msgs::UInt32Converter {}),
+        );
+        registry.register(
+            "std_msgs/msg/UInt64",
+            Arc::new(std_msgs::UInt64Converter {}),
+        );
+        registry.register(
+            "std_msgs/msg/Float32",
+            Arc::new(std_msgs::Float32Converter {}),
+        );
+        registry.register(
+            "std_msgs/msg/Float64",
+            Arc::new(std_msgs::Float64Converter {}),
+        );
         registry.register(
             "geometry_msgs/msg/Transform",
-            Arc::new(TransformConverter {}),
+            Arc::new(geometry_msgs::TransformConverter {}),
         );
         registry.register(
             "geometry_msgs/msg/Quaternion",
-            Arc::new(QuaternionConverter {}),
+            Arc::new(geometry_msgs::QuaternionConverter {}),
         );
         registry
     }
