@@ -1,4 +1,3 @@
-use crate::converters::builtin_interfaces;
 use crate::converters::std_msgs;
 use crate::converters::traits::Converter;
 use anyhow::{Error, Result};
@@ -30,8 +29,8 @@ impl Converter for QuaternionConverter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
-        topic: &str,
-        frame_id: &Option<String>,
+        _topic: &str,
+        _frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
@@ -63,8 +62,8 @@ impl Converter for TransformConverter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
-        topic: &str,
-        frame_id: &Option<String>,
+        _topic: &str,
+        _frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {
@@ -103,8 +102,8 @@ impl Converter for TransformStampedConverter {
     fn convert(
         &self,
         rec: &Arc<rerun::RecordingStream>,
-        topic: &str,
-        frame_id: &Option<String>,
+        _topic: &str,
+        _frame_id: &Option<String>,
         entity_path: &str,
         cdr_buffer: &mut Cursor<Vec<u8>>,
     ) -> Result<(), Error> {

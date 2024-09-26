@@ -37,7 +37,7 @@ fn main() -> Result<(), Error> {
     let mut _subscriptions = Vec::new();
 
     for ((topic_name, frame_id), (ros_type, entity_path)) in config_parser.conversions().clone() {
-        let msg_spec = rerun_ros::ros_introspection::MsgSpec::new(&ros_type)?;
+        let _msg_spec = rerun_ros::ros_introspection::MsgSpec::new(&ros_type)?;
         println!(
             "Subscribing to topic: {topic_name} and frame_id {} with type: {ros_type}",
             frame_id.clone().unwrap_or("None".to_string()),
