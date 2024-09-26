@@ -8,14 +8,14 @@ use std::path::Path;
 #[derive(Deserialize, Debug)]
 struct Conversion {
     topic: String,
-    frame_id: String,
+    frame_id: Option<String>,
     ros_type: String,
     entity_path: String,
 }
 
 /// Parses and holds conversion configurations.
 pub struct ConfigParser {
-    conversions: HashMap<(String, String), (String, String)>,
+    conversions: HashMap<(String, Option<String>), (String, String)>,
 }
 
 impl ConfigParser {
@@ -54,7 +54,7 @@ impl ConfigParser {
     }
 
     /// Returns a reference to the conversions hashmap.
-    pub fn conversions(&self) -> &HashMap<(String, String), (String, String)> {
+    pub fn conversions(&self) -> &HashMap<(String, Option<String>), (String, String)> {
         &self.conversions
     }
 }
