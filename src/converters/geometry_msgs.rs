@@ -110,6 +110,13 @@ impl Converter for TransformStampedConverter {
     ) -> Result<(), Error> {
         let cdr_transform_stamped =
             cdr::deserialize_from::<_, CDRTransformStamped, _>(cdr_buffer, cdr::Infinite)?;
+        // NOTE: here we can compare the frame_id of the message with the frame_id in the configuration
+        // if they don't match, we can skip the message
+        // if let Some(frame_id) = frame_id {
+        //     if frame_id != cdr_transform_stamped.frame_id {
+        //         return Ok(());
+        //     }
+        // }
         let translation = rerun::Vec3D::new(
             cdr_transform_stamped.transform.translation.x as f32,
             cdr_transform_stamped.transform.translation.y as f32,

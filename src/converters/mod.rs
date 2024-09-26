@@ -122,6 +122,10 @@ impl ConverterRegistry {
             "geometry_msgs/msg/Quaternion",
             Arc::new(geometry_msgs::QuaternionConverter {}),
         );
+        registry.register(
+            "geometry_msgs/msg/TransformStamped",
+            Arc::new(geometry_msgs::TransformStampedConverter {}),
+        );
         registry
     }
 }

@@ -60,8 +60,8 @@ fn main() -> Result<(), Error> {
                     &rec,
                     &topic_name,
                     &frame_id,
-                    &ros_type,
                     &entity_path,
+                    &ros_type,
                     &mut cdr_buffer,
                 ) {
                     eprintln!("Error processing message: {e}");
